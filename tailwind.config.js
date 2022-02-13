@@ -7,8 +7,8 @@ module.exports = {
 
     extend: {
       fontFamily: {
-        'wonderful-branding': 'WonderfulBranding',
-        'nixie-one': 'NixieOne'
+        'wonderful-branding': 'WonderfulBranding, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+        'nixie-one': 'NixieOne, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;'
       },
       colors: {
         'brand': '#d37200',

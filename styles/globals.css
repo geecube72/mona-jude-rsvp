@@ -5,11 +5,11 @@
 @layer base {
   @font-face {
     font-family: 'WonderfulBranding';
-    src: local('WonderfulBranding'), url(../fonts/WonderfulBranding.otf) format('opentype');
+    src: local('WonderfulBranding'), url(../public/fonts/WonderfulBranding.otf) format('opentype');
   }
 
   @font-face {
     font-family: 'NixieOne';
-    src: local('NixieOne'), url(../fonts/NixieOne.ttf) format('truetype');
+    src: local('NixieOne'), url(../public/fonts/NixieOne.ttf) format('truetype');
   }
 }
