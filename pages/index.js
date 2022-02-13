@@ -7,7 +7,7 @@ export default function Home(props) {
   return (
     <div className={'h-screen flex justify-center items-center'}>
       <div className="text-3xl w-full text-center flex-col">
-        <div className={'px-10'}>
+        <div className={'px-10 pt-20'}>
           <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
               style={{ lineHeight: '3rem' }}>
             {'Not April Fools cos yes it\'s true!'}
@@ -52,7 +52,7 @@ export default function Home(props) {
               </label>
             </div>
           </div>
-          <div>
+          <div className={'pb-10'}>
             <button
               className="font-wonderful-branding text-lg pt-2 px-6 font-semibold rounded-full bg-brand text-white text-center"
               type="submit">
