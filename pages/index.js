@@ -1,16 +1,8 @@
-import router from 'next/router';
-import { useEffect } from 'react';
 import useGetGuestNames from '../helpers/get-guests-names';
-import axios from 'axios';
 
-let urlNames = ['Michael', 'Maye']
 
 export default function Home(props) {
   const guests = useGetGuestNames(props)
-
-  useEffect(() => {
-    router.push(`/?names=${encodeURIComponent(urlNames)}`)
-  }, [])
 
   return (
     <div className={'h-screen flex justify-center items-center'}>
@@ -22,18 +14,18 @@ export default function Home(props) {
           </h1>
         </div>
         <div className={'mb-5'}>
-          <span className="font-nixie-one text-xl">#KeZesIT on 1 April 2022</span>
+          <span className="font-nixie-one text-xl text-brand-dark">#KeZesIT on 1 April 2022</span>
         </div>
         <div className="px-5">
-          <div className="font-nixie-one  text-2xl mb-5">
+          <div className="font-nixie-one  text-2xl mb-5 text-brand-dark">
             So... {guests}, will you RSVP?
           </div>
-          <div className={'font-nixie-one text-lg mb-8 text-left flex flex-col'}>
+          <div className={'font-nixie-one text-lg mb-8 text-left flex flex-col text-brand-dark'}>
             <div className="flex lg:justify-center md:lg:justify-center mb-3">
               <input
                 className="rounded-full h-4 w-4 border accent-brand border-gray-300 bg-white mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                 type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-              <label className="form-check-label inline-block text-gray-800"
+              <label className="form-check-label inline-block"
                      htmlFor="flexRadioDefault1">
                 accepts with joy
               </label>
@@ -43,7 +35,7 @@ export default function Home(props) {
               <input
                 className="w-4 h-4 rounded-full border accent-brand border-gray-300 bg-white focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                 type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
-              <label className="inline-block text-gray-800 flex-1"
+              <label className="inline-block flex-1"
                      htmlFor="flexRadioDefault2">
                 will celebrate from afar
                 <p className={'font-nixie-one text-xs leading-4 mb-5'}>
@@ -55,10 +47,17 @@ export default function Home(props) {
                 <a
                   href={'https://us05web.zoom.us/j/3060756566?pwd=cytmOXJ1TC9OUGNSVnFTRE9nUnhDQT09'}
                   target={'_blank'}
-                  className={'text-lg font-wonderful-branding underline text-brand'}
+                  className={'text-lg font-wonderful-branding text-brand'}
                   rel="noreferrer">Take me to the wedding!</a>
               </label>
             </div>
+          </div>
+          <div>
+            <button
+              className="font-wonderful-branding text-lg pt-2 px-6 font-semibold rounded-full bg-brand text-white text-center"
+              type="submit">
+              submit response
+            </button>
           </div>
         </div>
       </div>

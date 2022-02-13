@@ -11,7 +11,8 @@ module.exports = {
         'nixie-one': 'NixieOne'
       },
       colors: {
-        'brand': '#d37200'
+        'brand': '#d37200',
+        'brand-dark': '#824200'
       },
     },
   },
