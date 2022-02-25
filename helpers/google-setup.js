@@ -44,21 +44,14 @@ function getNewToken(oAuth2Client, callback) {
     scope: SCOPES,
   });
   console.log('Authorize this app by visiting this url:', authUrl);
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  rl.question('Enter the code from that page here: ', (code) => {
-    rl.close();
-    oAuth2Client.getToken('4/0AX4XfWhFlu-xCvAT77gs1xGs7cRnEysvO5iccrcpu91adDsrse1792MnBYNbyNv1jDmSfQ', (err, token) => {
-      if (err) return console.error('Error while trying to retrieve access token', err);
-      oAuth2Client.setCredentials(token);
-      // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) return console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
-      });
-      callback(oAuth2Client);
+  oAuth2Client.getToken('4/0AX4XfWhFlu-xCvAT77gs1xGs7cRnEysvO5iccrcpu91adDsrse1792MnBYNbyNv1jDmSfQ', (err, token) => {
+    if (err) return console.error('Error while trying to retrieve access token', err);
+    oAuth2Client.setCredentials(token);
+    // Store the token to disk for later program executions
+    fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+      if (err) return console.error(err);
+      console.log('Token stored to', TOKEN_PATH);
     });
+    callback(oAuth2Client);
   });
 }
