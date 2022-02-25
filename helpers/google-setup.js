@@ -7,7 +7,7 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 // The file credentials.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = 'token.json';
+const TOKEN_PATH = '../token.json';
 
 
 export const SHEET_ID = '1W0rSXS-R_YQYIPHf_V48zKXKCOxByDizM91ivOdMcvE'
