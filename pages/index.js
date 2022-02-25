@@ -59,7 +59,7 @@ export default function Home(props) {
     return (
       <div className={'h-screen flex justify-center items-center'}>
         <div className="text-3xl w-full text-center flex-col">
-          <div className={'px-10 pt-20'}>
+          <div className={'px-10 py-20'}>
             <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
                 style={{ lineHeight: '3rem' }}>
               {'Loading'}
@@ -74,7 +74,7 @@ export default function Home(props) {
     return (
       <div className={'h-screen flex justify-center items-center'}>
         <div className="text-3xl w-full text-center flex-col">
-          <div className={'px-10 pt-20'}>
+          <div className={'px-10 py-20'}>
             <h1 className="font-nixie-one font-bold text-lg tracking-wider text-brand"
                 style={{ lineHeight: '1.5rem' }}>
               {`
@@ -96,7 +96,7 @@ export default function Home(props) {
     return (
       <div className={'h-screen flex justify-center items-center'}>
         <div className="text-3xl w-full text-center flex-col">
-          <div className={'px-10 pt-20'}>
+          <div className={'px-10 py-20'}>
             <h1
               className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand mb-10"
               style={{ lineHeight: '3rem' }}>
@@ -120,7 +120,7 @@ export default function Home(props) {
     return (
       <div className={'h-screen flex justify-center items-center'}>
         <div className="text-3xl w-full text-center flex-col">
-          <div className={'px-10 pt-20'}>
+          <div className={'px-10 py-20'}>
             <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
                 style={{ lineHeight: '3rem' }}>
               {'See you there!'}
