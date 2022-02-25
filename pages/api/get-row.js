@@ -1,8 +1,5 @@
-import fs from 'fs'
-import path from 'path'
 import { google } from 'googleapis';
 import { authorize, SHEET_ID } from '../../helpers/google-setup';
-import token from '../../token.json'
 import credentials from '../../credentials.json'
 
 const getRow = (req, res) => (auth) => {
@@ -35,6 +32,6 @@ const getRow = (req, res) => (auth) => {
   });
 }
 
-export default (req, res) => {
+export default function GetRow(req, res) {
   authorize(credentials, getRow(req, res));
 }

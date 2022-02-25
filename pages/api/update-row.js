@@ -34,7 +34,7 @@ const updateRow = (req, res) => (auth) => {
   });
 }
 
-export default (req, res) => {
+export default function UpdateRow(req, res) {
   if (req.method !== 'PATCH') {
     return res.status(403).json({
       error: true,

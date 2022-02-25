@@ -55,7 +55,7 @@ export default function Home(props) {
     rsvpValue.current = e.target.value
   }
 
-  if (loading) {
+  const LoadingComponent = () => {
     return (
       <div className={'h-screen flex justify-center items-center'}>
         <div className="text-3xl w-full text-center flex-col">
@@ -70,7 +70,7 @@ export default function Home(props) {
     )
   }
 
-  if (error) {
+  const ErrorComponent = () => {
     return (
       <div className={'h-screen flex justify-center items-center'}>
         <div className="text-3xl w-full text-center flex-col">
@@ -92,7 +92,7 @@ export default function Home(props) {
     )
   }
 
-  if (sheetValue === 'No') {
+  const NoAnswerComponent = () => {
     return (
       <div className={'h-screen flex justify-center items-center'}>
         <div className="text-3xl w-full text-center flex-col">
@@ -116,7 +116,7 @@ export default function Home(props) {
     )
   }
 
-  if (sheetValue === 'Yes') {
+  const YesAnswerComponent = () => {
     return (
       <div className={'h-screen flex justify-center items-center'}>
         <div className="text-3xl w-full text-center flex-col">
@@ -131,7 +131,7 @@ export default function Home(props) {
     )
   }
 
-  if (!loading && !sheetValue) {
+  const FormComponent = () => {
     return (
       <div className={'h-screen flex justify-center items-center'}>
         <div className="text-3xl w-full text-center flex-col">
@@ -197,6 +197,26 @@ export default function Home(props) {
         </div>
       </div>
     )
+  }
+
+  if (loading) {
+    return <LoadingComponent/>
+  }
+
+  if (error) {
+    return <ErrorComponent/>
+  }
+
+  if (sheetValue === 'No') {
+    return <NoAnswerComponent/>
+  }
+
+  if (sheetValue === 'Yes') {
+    return <YesAnswerComponent/>
+  }
+
+  if (!loading && !sheetValue) {
+    return <FormComponent/>
   }
 }
 
