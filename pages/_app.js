@@ -12,9 +12,9 @@ function MyApp({ Component, pageProps }) {
         <meta property="og:type" content="website"/>
         <meta property="og:title" content="#KeZesIt"/>
         <meta property="og:description"
-              content="Keziah and Zester's wedding."/>
+              content="Wanna be part of something amazing?"/>
         <meta property="og:image"
-              content="https://scontent.fceb6-1.fna.fbcdn.net/v/t1.6435-9/80971636_2773593329387196_583489655261888512_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=esS0T0i1wrcAX_pN6xX&_nc_oc=AQnRXnlaYPNA0z7-SIQkcPXa0f-q29KAxP3kTsQ8LbVMQ8XIj0ckjjdq8adKcKWbTIc&_nc_ht=scontent.fceb6-1.fna&oh=00_AT9M2sjD9GOZCR9hvw2XFn6XXl-RlfhM1gMhmcQL4WtL_A&oe=623F5C74"/>
+              content="https://instagram.fceb6-1.fna.fbcdn.net/v/t51.2885-15/132331036_777795976156427_3432887419334943620_n.jpg?stp=dst-jpg_e35_s1080x1080&_nc_ht=instagram.fceb6-1.fna.fbcdn.net&_nc_cat=111&_nc_ohc=0OU3N30p9cYAX_mAEI9&edm=AABBvjUBAAAA&ccb=7-4&oh=00_AT84BfBiWjnHjmsU_TYMuPJyO8w3mN2lJFcXVEES4YgGng&oe=621EB3BA&_nc_sid=83d603"/>
       </Head>
       <Component {...pageProps} />
     </>
