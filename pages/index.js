@@ -12,6 +12,13 @@ export default function Home(props) {
   const [error, setError] = useState(false)
 
   useEffect(() => {
+    if (!props.names || !props.column) {
+      setError(true)
+      setLoading(false)
+    }
+  }, [props])
+
+  useEffect(() => {
     if (guests) {
       (async () => {
         try {
@@ -219,11 +226,11 @@ export default function Home(props) {
     )
   }
 
-  if (loading && !error) {
+  if (loading) {
     return <LoadingComponent/>
   }
 
-  if (error && !loading) {
+  if (error) {
     return <ErrorComponent/>
   }
 
