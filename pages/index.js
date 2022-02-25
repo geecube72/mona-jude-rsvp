@@ -41,7 +41,7 @@ export default function Home(props) {
         { going: rsvpValue.current }
       )
 
-      setSheetValue(rsvpValue.current === 1 ? 'Yes' : 'No')
+      setSheetValue(rsvpValue.current === '1' ? 'Yes' : 'No')
     } catch (error) {
       console.log(error.response)
     } finally {
