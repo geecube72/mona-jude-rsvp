@@ -24,7 +24,7 @@ export default function Home(props) {
             setSheetValue(response.data.values[0][1])
           }
         } catch (error) {
-          console.log(error.response)
+          setLoading(false)
           setError(true)
         } finally {
           setLoading(false)
@@ -57,7 +57,11 @@ export default function Home(props) {
 
   const LoadingComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'}>
+      <div className={'h-screen flex justify-center items-center'} style={{
+        maxWidth: 400,
+        marginRight: 'auto',
+        marginLeft: 'auto',
+      }}>
         <div className="text-3xl w-full text-center flex-col">
           <div className={'px-10 py-20'}>
             <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
@@ -72,7 +76,11 @@ export default function Home(props) {
 
   const ErrorComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'}>
+      <div className={'h-screen flex justify-center items-center'} style={{
+        maxWidth: 650,
+        marginRight: 'auto',
+        marginLeft: 'auto',
+      }}>
         <div className="text-3xl w-full text-center flex-col">
           <div className={'px-10 py-20'}>
             <h1 className="font-nixie-one font-bold text-lg tracking-wider text-brand"
@@ -94,7 +102,11 @@ export default function Home(props) {
 
   const NoAnswerComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'}>
+      <div className={'h-screen flex justify-center items-center'} style={{
+        maxWidth: 400,
+        marginRight: 'auto',
+        marginLeft: 'auto',
+      }}>
         <div className="text-3xl w-full text-center flex-col">
           <div className={'px-10 py-20'}>
             <h1
@@ -118,7 +130,11 @@ export default function Home(props) {
 
   const YesAnswerComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'}>
+      <div className={'h-screen flex justify-center items-center'} style={{
+        maxWidth: 400,
+        marginRight: 'auto',
+        marginLeft: 'auto',
+      }}>
         <div className="text-3xl w-full text-center flex-col">
           <div className={'px-10 py-20'}>
             <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
@@ -203,23 +219,23 @@ export default function Home(props) {
     )
   }
 
-  if (loading) {
+  if (loading && !error) {
     return <LoadingComponent/>
   }
 
-  if (error) {
+  if (error && !loading) {
     return <ErrorComponent/>
   }
 
-  if (sheetValue === 'No') {
+  if (sheetValue === 'No' && !error && !loading) {
     return <NoAnswerComponent/>
   }
 
-  if (sheetValue === 'Yes') {
+  if (sheetValue === 'Yes' && !error && !loading) {
     return <YesAnswerComponent/>
   }
 
-  if (!loading && !sheetValue) {
+  if (!loading && !sheetValue && !error) {
     return <FormComponent/>
   }
 }
