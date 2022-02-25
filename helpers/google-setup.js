@@ -1,13 +1,14 @@
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
+import token from '../token.json'
 
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 // The file credentials.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = '../token.json';
+const TOKEN_PATH = 'token.json';
 
 
 export const SHEET_ID = '1W0rSXS-R_YQYIPHf_V48zKXKCOxByDizM91ivOdMcvE'
@@ -23,11 +24,12 @@ export function authorize(credentials, callback) {
   const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 
   // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getNewToken(oAuth2Client, callback);
-    oAuth2Client.setCredentials(JSON.parse(token));
+  if (!Object.keys(token).length) {
+    return getNewToken(oAuth2Client, callback);
+  } else {
+    oAuth2Client.setCredentials(token);
     callback(oAuth2Client);
-  });
+  }
 }
 
 /**
@@ -48,7 +50,7 @@ function getNewToken(oAuth2Client, callback) {
   });
   rl.question('Enter the code from that page here: ', (code) => {
     rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
+    oAuth2Client.getToken('4/0AX4XfWhFlu-xCvAT77gs1xGs7cRnEysvO5iccrcpu91adDsrse1792MnBYNbyNv1jDmSfQ', (err, token) => {
       if (err) return console.error('Error while trying to retrieve access token', err);
       oAuth2Client.setCredentials(token);
       // Store the token to disk for later program executions
