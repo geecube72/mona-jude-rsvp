@@ -9,6 +9,7 @@ export default function Home(props) {
   const [sheetValue, setSheetValue] = useState(null)
   const [loading, setLoading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     if (guests) {
@@ -24,6 +25,7 @@ export default function Home(props) {
           }
         } catch (error) {
           console.log(error.response)
+          setError(true)
         } finally {
           setLoading(false)
         }
@@ -61,6 +63,26 @@ export default function Home(props) {
             <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
                 style={{ lineHeight: '3rem' }}>
               {'Loading'}
+            </h1>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className={'h-screen flex justify-center items-center'}>
+        <div className="text-3xl w-full text-center flex-col">
+          <div className={'px-10 pt-20'}>
+            <h1 className="font-nixie-one font-bold text-lg tracking-wider text-brand"
+                style={{ lineHeight: '1.5rem' }}>
+              I don't know you. I don't know what you want. If you are looking for an error in my website, I can
+              tell you, I don't have time to fix it. But what I do have, are a very particular set of skills.
+              Skills I've acquired over a very long career. Skills that make me a nightmare for the
+              people like you. If you exit this website and rescan the code then go now, that'll be the end of it. I'll not
+              look for you. I'll not pursue you. But If you don't, I'll look for you. I'll find you
+              and I'll beg you not to do that again.
             </h1>
           </div>
         </div>
