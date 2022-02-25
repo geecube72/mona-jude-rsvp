@@ -133,7 +133,11 @@ export default function Home(props) {
 
   const FormComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'}>
+      <div className={'h-screen flex justify-center items-center'} style={{
+        maxWidth: 400,
+        marginRight: 'auto',
+        marginLeft: 'auto',
+      }}>
         <div className="text-3xl w-full text-center flex-col">
           <div className={'px-10 pt-20'}>
             <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
@@ -151,7 +155,7 @@ export default function Home(props) {
               </div>
               <div
                 className={'font-nixie-one text-lg mb-8 text-left flex flex-col text-brand-dark'}>
-                <div className="flex lg:justify-center md:lg:justify-center mb-3">
+                <div className="flex mb-3">
                   <input
                     onChange={handleOnChange}
                     className="rounded-full h-4 w-4 border accent-brand border-gray-300 bg-white mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
@@ -162,7 +166,7 @@ export default function Home(props) {
                   </label>
                 </div>
                 <div
-                  className="flex lg:justify-center md:lg:justify-center">
+                  className="flex">
                   <input
                     onChange={handleOnChange}
                     className="w-4 h-4 rounded-full border accent-brand border-gray-300 bg-white focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
