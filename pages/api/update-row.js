@@ -1,6 +1,5 @@
-import fs from 'fs'
-import path from 'path'
 import { google } from 'googleapis';
+import credentials from '../../credentials.json';
 import { authorize, SHEET_ID } from '../../helpers/google-setup';
 
 const updateRow = (req, res) => (auth) => {
@@ -43,11 +42,5 @@ export default (req, res) => {
     })
   }
 
-  // Load client secrets from a local file.
-
-  fs.readFileSync(path.resolve(__dirname, '../../credentials.json'), (err, content) => {
-    if (err) return console.log('Error loading client secret file:', err);
-    // Authorize a client with credentials, then call the Google Sheets API.
-    authorize(JSON.parse(content), updateRow(req, res));
-  });
+  authorize(credentials, updateRow(req, res));
 }
