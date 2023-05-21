@@ -3,5 +3,15 @@
 @tailwind utilities;
 
 @layer base {
-  @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap");
+  @font-face {
+    font-family: "DancingScript";
+    src: local("DancingScript"),
+      url(../public/fonts/DancingScript.ttf) format("truetype");
+  }
+
+  @font-face {
+    font-family: "Montserrat";
+    src: local("Montserrat"),
+      url(../public/fonts/Montserrat.ttf) format("truetype");
+  }
 }
