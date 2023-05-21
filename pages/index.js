@@ -1,252 +1,359 @@
-import axios from 'axios';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import useGetGuestNames from '../helpers/get-guests-names';
-
+import axios from "axios";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function Home(props) {
-  const guests = useGetGuestNames(props)
-  const rsvpValue = useRef(0)
-  const [sheetValue, setSheetValue] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState(false)
+  const rsvpValue = useRef(1);
+  const guestCount = useRef(1);
+  const [sheetValue, setSheetValue] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(false);
+  const [inputContainer, setInputContainer] = useState([]);
 
   useEffect(() => {
-    if (!props.names || !props.column) {
-      setError(true)
-      setLoading(false)
+    if (!props.hashtag || props.hashtag !== "MonaJudeNi!") {
+      setError(true);
+      setLoading(false);
+    } else {
+      guestCount.current = 1;
     }
-  }, [props])
+  }, [props]);
 
-  useEffect(() => {
-    if (guests) {
-      (async () => {
-        try {
-          setLoading(true)
-          const response = await axios.get(
-            `api/get-row?column=${props.column}&names=${encodeURIComponent(guests)}`
-          )
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-          if (response.data.values[0].length > 1) {
-            setSheetValue(response.data.values[0][1])
-          }
-        } catch (error) {
-          setLoading(false)
-          setError(true)
-        } finally {
-          setLoading(false)
-        }
-      })()
-    }
-  }, [props, guests])
+      if (!guestCount.current) {
+        alert("No guests");
+        return;
+      }
 
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault()
+      let guestData = [];
+      const boolString = Number(rsvpValue.current) === 1 ? "Yes" : "No";
 
-    try {
-      setSubmitting(true)
-      const response = await axios.patch(
-        `api/update-row?column=${props.column}&names=${encodeURIComponent(guests)}`,
-        { going: rsvpValue.current }
-      )
+      for (let x = 0; x < guestCount.current; x++) {
+        const el = document.getElementById(`guest-${x + 1}`);
+        guestData.push([el.value, boolString]);
+      }
 
-      setSheetValue(rsvpValue.current === '1' ? 'Yes' : 'No')
-    } catch (error) {
-      console.log(error.response)
-    } finally {
-      setSubmitting(false)
-    }
-  }, [props, guests])
+      try {
+        setSubmitting(true);
+
+        await axios.post(`api/append-row`, { guestData });
+
+        setSheetValue(boolString);
+      } catch (error) {
+        console.log(error.response);
+        setError(true);
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [props]
+  );
+
+  const btnClassName =
+    "font-dancing-script text-2xl px-6 py-2 font-semibold rounded-full bg-brand text-white text-center";
+
+  const handleGuestCount = (e) => {
+    guestCount.current = e.target.value;
+  };
 
   const handleOnChange = (e) => {
-    rsvpValue.current = e.target.value
-  }
+    rsvpValue.current = e.target.value;
+  };
+
+  const handleRequestGuest = () => {
+    const count = guestCount.current;
+
+    if (count > 5) {
+      alert("Maximum of 5 guests per request only.");
+      window.location.reload();
+      return;
+    }
+
+    if (count <= 0) {
+      alert("Minimum of 1 guest.");
+      window.location.reload();
+      return;
+    }
+
+    let guestComponents = [];
+
+    for (let x = 0; x < count; x++) {
+      guestComponents.push(
+        <div className="mb-3" key={x}>
+          <label className="form-check-label">
+            {count > 1 ? `Guest #${x + 1}` : "Guest's"} Full Name:
+          </label>
+          <input
+            type="text"
+            className="px-4 h-10  rounded-lg w-full border border-solid accent-brand-dark border-gray-300 bg-white mt-1 align-top bg-no-repeat bg-center bg-contain float-left"
+            required={true}
+            id={`guest-${x + 1}`}
+            name={`guest-${x + 1}`}
+          />
+        </div>
+      );
+    }
+    setInputContainer(guestComponents);
+  };
 
   const LoadingComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'} style={{
-        maxWidth: 400,
-        marginRight: 'auto',
-        marginLeft: 'auto',
-      }}>
+      <div
+        className={"h-screen flex justify-center items-center mx-auto"}
+        style={{ maxWidth: 400 }}
+      >
         <div className="text-3xl w-full text-center flex-col">
-          <div className={'px-10 py-20'}>
-            <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
-                style={{ lineHeight: '3rem' }}>
-              {'Loading'}
+          <div className={"px-10 py-20"}>
+            <h1
+              className="font-dancing-script font-bold text-4xl tracking-wider text-brand-dark"
+              style={{ lineHeight: "3rem" }}
+            >
+              {"Loading"}
             </h1>
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const ErrorComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'} style={{
-        maxWidth: 650,
-        marginRight: 'auto',
-        marginLeft: 'auto',
-      }}>
+      <div
+        className={"h-screen flex justify-center items-center"}
+        style={{
+          maxWidth: 650,
+          marginRight: "auto",
+          marginLeft: "auto",
+        }}
+      >
         <div className="text-3xl w-full text-center flex-col">
-          <div className={'px-10 py-20'}>
-            <h1 className="font-nixie-one font-bold text-lg tracking-wider text-brand"
-                style={{ lineHeight: '1.5rem' }}>
-              {`
-               I don't know you. I don't know what you want. If you are looking for an error in my website, I can
-              tell you, I don't have time to fix it. But what I do have, are a very particular set of skills.
-              Skills I've acquired over a very long career. Skills that make me a nightmare for the
-              people like you. If you exit this website and rescan the code then go now, that'll be the end of it. I'll not
-              look for you. I'll not pursue you. But If you don't, I'll look for you. I'll find you
-              and I'll beg you not to do that again.
-              `}
+          <div className={"px-10 py-20"}>
+            <h1
+              className="font-dancing-script font-bold tracking-wider text-brand-dark"
+              style={{ lineHeight: "3rem" }}
+            >
+              Sorry, either the page you are searching is not available or the
+              server is encountering errors. Please try again.
             </h1>
+          </div>
+          <div>
+            <button
+              className={btnClassName}
+              onClick={() => window.history.back()}
+            >
+              Back
+            </button>
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const NoAnswerComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'} style={{
-        maxWidth: 400,
-        marginRight: 'auto',
-        marginLeft: 'auto',
-      }}>
+      <div
+        className={"h-screen flex justify-center items-center mx-auto"}
+        style={{ maxWidth: 400 }}
+      >
         <div className="text-3xl w-full text-center flex-col">
-          <div className={'px-10 py-20'}>
+          <div className={"px-10 py-20"}>
             <h1
-              className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand mb-10"
-              style={{ lineHeight: '3rem' }}>
+              className="font-dancing-script font-bold text-4xl tracking-wider text-brand-dark mb-10"
+              style={{ lineHeight: "3rem" }}
+            >
               We understand!
             </h1>
-            <h5 className="font-nixie-one font-bold text-2xl tracking-wider text-brand mb-2">
-              We hope to see you in zoom then
+            <h5 className="font-montserrat font-bold text-2xl tracking-wider text-brand-dark mb-2">
+              Thank you for your response. We hope to see you soon!
             </h5>
-            <a
-              href={'https://us05web.zoom.us/j/3060756566?pwd=cytmOXJ1TC9OUGNSVnFTRE9nUnhDQT09'}
-              target={'_blank'}
-              className={'text-lg font-wonderful-branding text-brand underline'}
-              rel="noreferrer">Take me to the wedding!</a>
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const YesAnswerComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'} style={{
-        maxWidth: 400,
-        marginRight: 'auto',
-        marginLeft: 'auto',
-      }}>
+      <div
+        className={"h-screen flex justify-center items-center"}
+        style={{
+          maxWidth: 400,
+          marginRight: "auto",
+          marginLeft: "auto",
+        }}
+      >
         <div className="text-3xl w-full text-center flex-col">
-          <div className={'px-10 py-20'}>
-            <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
-                style={{ lineHeight: '3rem' }}>
-              {'See you there!'}
+          <div className={"px-10 py-20"}>
+            <h1
+              className="font-dancing-script font-bold text-4xl tracking-wider text-brand mb-8"
+              style={{ lineHeight: "3rem" }}
+            >
+              Thank you for your response! We are looking forward to see you!
             </h1>
+            <h2 className="font-dancing-script font-bold tracking-wider text-brand-dark mb-2">
+              {"#MonaJudeNi! <3"}
+            </h2>
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const FormComponent = () => {
     return (
-      <div className={'h-screen flex justify-center items-center'} style={{
-        maxWidth: 400,
-        marginRight: 'auto',
-        marginLeft: 'auto',
-      }}>
-        <div className="text-3xl w-full text-center flex-col">
-          <div className={'px-10 pt-20'}>
-            <h1 className="font-wonderful-branding font-bold text-4xl tracking-wider text-brand"
-                style={{ lineHeight: '3rem' }}>
-              {'Not April Fools cos yes it\'s true!'}
+      <div
+        className={"h-screen flex justify-center items-center mx-auto"}
+        style={{ maxWidth: 500 }}
+      >
+        <div className="text-3xl w-full text-center flex-col px-5">
+          <div>
+            <h1
+              className="font-dancing-script font-bold text-4xl tracking-wider text-brand"
+              style={{ lineHeight: "3rem" }}
+            >
+              "I have found the one whom my soul loves."
             </h1>
+            <p className="font-dancing-script font-bold text-4xl tracking-wider text-brand">
+              {"Song of Salomon 3:4"}
+            </p>
           </div>
-          <div className={'mb-5'}>
-            <span className="font-nixie-one text-xl text-brand-dark">#KeZesIT on 1 April 2022</span>
+          <div className={"mt-6"}>
+            <span className="font-montserrat text-xl text-brand-dark">
+              <span className="font-dancing-script text-2xl">#MonaJudeNi</span>{" "}
+              on 8 August 2023
+            </span>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="px-5">
-              <div className="font-nixie-one text-2xl mb-5 text-brand-dark">
-                So... {guests}, will you RSVP?
-              </div>
+          <div className="mx-auto mt-6" style={{ maxWidth: 400 }}>
+            {!inputContainer.length ? (
               <div
-                className={'font-nixie-one text-lg mb-8 text-left flex flex-col text-brand-dark'}>
-                <div className="flex mb-3">
-                  <input
-                    onChange={handleOnChange}
-                    className="rounded-full h-4 w-4 border accent-brand border-gray-300 bg-white mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                    type="radio" name="flexRadioDefault" value={1} id="flexRadioDefault1"/>
-                  <label className="form-check-label inline-block"
-                         htmlFor="flexRadioDefault1">
-                    accepts with joy
+                className={
+                  "font-montserrat text-lg mb-8 text-left flex flex-col text-brand-dark"
+                }
+              >
+                <div className="mt-6">
+                  <label className="form-check-label">
+                    Enter Number of Guests:
                   </label>
+                  <input
+                    type="number"
+                    className="px-4 h-10 rounded-lg w-full border border-solid accent-brand-dark border-gray-300 bg-white mt-1 align-top bg-no-repeat bg-center bg-contain float-left"
+                    onChange={handleGuestCount}
+                    name="num-guests"
+                    min={1}
+                    max={5}
+                    defaultValue={1}
+                  />
                 </div>
-                <div
-                  className="flex">
-                  <input
-                    onChange={handleOnChange}
-                    className="w-4 h-4 rounded-full border accent-brand border-gray-300 bg-white focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                    type="radio" name="flexRadioDefault" value={0} id="flexRadioDefault2"/>
-                  <label className="inline-block flex-1"
-                         htmlFor="flexRadioDefault2">
-                    will celebrate from afar
-                    <p className={'font-nixie-one text-xs leading-4 mb-5'}>
-                      {`Getting married during the pandemic is truly challenging and we would totally
-                understand if you won't be able to make it due to the restrictions. We have prepared
-                for this and made sure you can still celebrate with us from afar by clicking the
-                hyperlink below:`}
-                    </p>
-                    <a
-                      href={'https://us05web.zoom.us/j/3060756566?pwd=cytmOXJ1TC9OUGNSVnFTRE9nUnhDQT09'}
-                      target={'_blank'}
-                      className={'text-lg font-wonderful-branding text-brand underline'}
-                      rel="noreferrer">Take me to the wedding!</a>
-                  </label>
+                <div className="flex justify-center mt-6">
+                  <button className={btnClassName} onClick={handleRequestGuest}>
+                    Submit
+                  </button>
                 </div>
               </div>
-              <div className={'pb-10'}>
-                <button
-                  disabled={submitting}
-                  className="font-wonderful-branding text-lg pt-2 px-6 font-semibold rounded-full bg-brand text-white text-center"
-                  type="submit">
-                  submit response
-                </button>
-              </div>
-            </div>
-          </form>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="font-montserrat text-2xl mb-5 text-brand">
+                    So... will you RSVP?
+                  </div>
+                  <div
+                    className={
+                      "font-montserrat text-lg mb-8 text-left flex flex-col text-brand-dark"
+                    }
+                  >
+                    {inputContainer}
+                  </div>
+                  <div
+                    className={
+                      "font-montserrat text-lg mb-8 text-left flex flex-col text-brand-dark"
+                    }
+                  >
+                    <div className="flex mb-3">
+                      <input
+                        onChange={handleOnChange}
+                        className="rounded-full h-4 w-4 border accent-brand-dark border-gray-300 bg-white mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                        type="radio"
+                        name="flexRadioDefault"
+                        value={1}
+                        id="flexRadioDefault1"
+                        checked={true}
+                      />
+                      <label
+                        className="form-check-label inline-block"
+                        htmlFor="flexRadioDefault1"
+                      >
+                        Yes, will gladly accept.
+                      </label>
+                    </div>
+                    <div className="flex">
+                      <input
+                        onChange={handleOnChange}
+                        className="w-4 h-4 rounded-full border accent-brand-dark border-gray-300 bg-white focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                        type="radio"
+                        name="flexRadioDefault"
+                        value={0}
+                        id="flexRadioDefault2"
+                      />
+                      <label
+                        className="inline-block flex-1"
+                        htmlFor="flexRadioDefault2"
+                      >
+                        No, will celebrate from afar.
+                      </label>
+                    </div>
+                  </div>
+                  <div className={"pb-10 flex gap-4"}>
+                    <button
+                      disabled={submitting}
+                      className={btnClassName}
+                      type="submit"
+                    >
+                      Submit Response
+                    </button>
+                    <button
+                      disabled={submitting}
+                      className={btnClassName}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setInputContainer([]);
+                      }}
+                    >
+                      Go Back
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
+          </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
-  if (loading) {
-    return <LoadingComponent/>
+  if (submitting || loading) {
+    return <LoadingComponent />;
   }
 
   if (error) {
-    return <ErrorComponent/>
+    return <ErrorComponent />;
   }
 
-  if (sheetValue === 'No' && !error && !loading) {
-    return <NoAnswerComponent/>
+  if (sheetValue === "No" && !error && !loading) {
+    return <NoAnswerComponent />;
   }
 
-  if (sheetValue === 'Yes' && !error && !loading) {
-    return <YesAnswerComponent/>
+  if (sheetValue === "Yes" && !error && !loading) {
+    return <YesAnswerComponent />;
   }
 
   if (!loading && !sheetValue && !error) {
-    return <FormComponent/>
+    return <FormComponent />;
   }
 }
 
 Home.getInitialProps = async (ctx) => {
-  return ctx.query
-}
+  return ctx.query;
+};

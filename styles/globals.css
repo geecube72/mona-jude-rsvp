@@ -3,13 +3,5 @@
 @tailwind utilities;
 
 @layer base {
-  @font-face {
-    font-family: 'WonderfulBranding';
-    src: local('WonderfulBranding'), url(../public/fonts/WonderfulBranding.otf) format('opentype');
-  }
-
-  @font-face {
-    font-family: 'NixieOne';
-    src: local('NixieOne'), url(../public/fonts/NixieOne.ttf) format('truetype');
-  }
+  @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap");
 }
