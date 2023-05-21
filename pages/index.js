@@ -9,6 +9,7 @@ export default function Home(props) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(false);
   const [inputContainer, setInputContainer] = useState([]);
+  const [imgUrl, setImgUrl] = useState("");
 
   useEffect(() => {
     if (!props.hashtag || props.hashtag !== "MonaJudeNi!") {
@@ -18,6 +19,10 @@ export default function Home(props) {
       guestCount.current = 1;
     }
   }, [props]);
+
+  useEffect(() => {
+    setImgUrl(`${window.location.origin}/img/mona-jude.jpg`);
+  }, []);
 
   const handleSubmit = useCallback(
     async (e) => {
@@ -102,7 +107,9 @@ export default function Home(props) {
   const LoadingComponent = () => {
     return (
       <div
-        className={"h-screen flex justify-center items-center mx-auto"}
+        className={
+          "h-full md:h-screen flex justify-center items-center mx-auto"
+        }
         style={{ maxWidth: 400 }}
       >
         <div className="text-3xl w-full text-center flex-col">
@@ -111,7 +118,7 @@ export default function Home(props) {
               className="font-dancing-script font-bold text-4xl tracking-wider text-brand-dark"
               style={{ lineHeight: "3rem" }}
             >
-              {"Loading"}
+              {"Loading ..."}
             </h1>
           </div>
         </div>
@@ -122,7 +129,7 @@ export default function Home(props) {
   const ErrorComponent = () => {
     return (
       <div
-        className={"h-screen flex justify-center items-center"}
+        className={"h-full md:h-screen flex justify-center items-center"}
         style={{
           maxWidth: 650,
           marginRight: "auto",
@@ -155,7 +162,9 @@ export default function Home(props) {
   const NoAnswerComponent = () => {
     return (
       <div
-        className={"h-screen flex justify-center items-center mx-auto"}
+        className={
+          "h-full md:h-screen flex justify-center items-center mx-auto"
+        }
         style={{ maxWidth: 400 }}
       >
         <div className="text-3xl w-full text-center flex-col">
@@ -177,25 +186,26 @@ export default function Home(props) {
 
   const YesAnswerComponent = () => {
     return (
-      <div
-        className={"h-screen flex justify-center items-center"}
-        style={{
-          maxWidth: 400,
-          marginRight: "auto",
-          marginLeft: "auto",
-        }}
-      >
-        <div className="text-3xl w-full text-center flex-col">
-          <div className={"px-10 py-20"}>
-            <h1
-              className="font-dancing-script font-bold text-4xl tracking-wider text-brand mb-8"
-              style={{ lineHeight: "3rem" }}
-            >
-              Thank you for your response! We are looking forward to see you!
-            </h1>
-            <h2 className="font-dancing-script font-bold tracking-wider text-brand-dark mb-2">
-              {"#MonaJudeNi! <3"}
-            </h2>
+      <div className="h-full md:h-screen flex flex-col items-center justify-center">
+        <div className="w-full mx-auto" style={{ maxWidth: 500 }}>
+          <img src={imgUrl} alt="mona-jude-bg" loading="lazy" />
+        </div>
+        <div
+          className={"h-auto mt-10 flex justify-center items-center mx-auto"}
+          style={{ maxWidth: 400 }}
+        >
+          <div className="text-3xl w-full text-center flex-col">
+            <div className={"px-10"}>
+              <h1
+                className="font-dancing-script font-bold text-4xl tracking-wider text-brand mb-8"
+                style={{ lineHeight: "3rem" }}
+              >
+                Thank you for your response! We are looking forward to see you!
+              </h1>
+              <h2 className="font-dancing-script font-bold tracking-wider text-brand-dark mb-2">
+                {"#MonaJudeNi! <3"}
+              </h2>
+            </div>
           </div>
         </div>
       </div>
@@ -205,10 +215,12 @@ export default function Home(props) {
   const FormComponent = () => {
     return (
       <div
-        className={"h-screen flex justify-center items-center mx-auto"}
+        className={
+          "h-full md:h-screen flex justify-center items-center mx-auto pt-16"
+        }
         style={{ maxWidth: 500 }}
       >
-        <div className="text-3xl w-full text-center flex-col px-5">
+        <div className="w-full text-center flex-col px-5">
           <div>
             <h1
               className="font-dancing-script font-bold text-4xl tracking-wider text-brand"
@@ -216,13 +228,13 @@ export default function Home(props) {
             >
               "I have found the one whom my soul loves."
             </h1>
-            <p className="font-dancing-script font-bold text-4xl tracking-wider text-brand">
-              {"Song of Salomon 3:4"}
+            <p className="mt-2 font-dancing-script font-bold text-3xl tracking-wider text-brand">
+              {"- Song of Salomon 3:4"}
             </p>
           </div>
-          <div className={"mt-6"}>
+          <div className={"mt-10"}>
             <span className="font-montserrat text-xl text-brand-dark">
-              <span className="font-dancing-script text-2xl">#MonaJudeNi</span>{" "}
+              <span className="font-dancing-script text-2xl">#MonaJudeNi!</span>{" "}
               on 8 August 2023
             </span>
           </div>
@@ -247,7 +259,7 @@ export default function Home(props) {
                     defaultValue={1}
                   />
                 </div>
-                <div className="flex justify-center mt-6">
+                <div className="flex justify-center mt-8">
                   <button className={btnClassName} onClick={handleRequestGuest}>
                     Submit
                   </button>
@@ -256,19 +268,12 @@ export default function Home(props) {
             ) : (
               <form onSubmit={handleSubmit}>
                 <div className="flex flex-col items-center justify-center">
-                  <div className="font-montserrat text-2xl mb-5 text-brand">
+                  <div className="font-montserrat text-2xl mb-8 text-brand">
                     So... will you RSVP?
                   </div>
                   <div
                     className={
-                      "font-montserrat text-lg mb-8 text-left flex flex-col text-brand-dark"
-                    }
-                  >
-                    {inputContainer}
-                  </div>
-                  <div
-                    className={
-                      "font-montserrat text-lg mb-8 text-left flex flex-col text-brand-dark"
+                      "font-montserrat text-lg mb-10 text-left flex flex-col text-brand-dark"
                     }
                   >
                     <div className="flex mb-3">
@@ -305,6 +310,13 @@ export default function Home(props) {
                       </label>
                     </div>
                   </div>
+                  <div
+                    className={
+                      "font-montserrat text-lg mb-10 text-left flex flex-col text-brand-dark"
+                    }
+                  >
+                    {inputContainer}
+                  </div>
                   <div className={"pb-10 flex gap-4"}>
                     <button
                       disabled={submitting}
@@ -319,6 +331,7 @@ export default function Home(props) {
                       onClick={(e) => {
                         e.preventDefault();
                         setInputContainer([]);
+                        guestCount.current = 1;
                       }}
                     >
                       Go Back
