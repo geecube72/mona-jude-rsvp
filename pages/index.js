@@ -12,7 +12,7 @@ export default function Home(props) {
   const [imgUrl, setImgUrl] = useState("");
 
   useEffect(() => {
-    if (!props.hashtag || props.hashtag !== "MonaJudeNi!") {
+    if (!props.hashtag || props.hashtag !== "MonaJudeNi") {
       setError(true);
       setLoading(false);
     } else {
