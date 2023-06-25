@@ -50,7 +50,7 @@ function getNewToken(oAuth2Client, callback) {
   console.log("Authorize this app by visiting this url:", authUrl);
 
   oAuth2Client.getToken(
-    "4/0AbUR2VPuo2XslP7iKeyKWtGAPtZ4aXTfblBglGw-j3mS1zjvbxsYd5_BExwhZ_eBwIFmfw",
+    "4/0AbUR2VPUkMM1n7hFtHdezgD6LHGHDojFCdR_A29SBS3uXticAF-9Wmv7F2bYVafYwJHbZg",
     (err, token) => {
       if (err)
         return console.error(

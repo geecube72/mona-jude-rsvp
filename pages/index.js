@@ -149,7 +149,7 @@ export default function Home(props) {
           <div>
             <button
               className={btnClassName}
-              onClick={() => window.history.back()}
+              onClick={() => (window.location.href = "/?hashtag=MonaJudeNi")}
             >
               Back
             </button>
