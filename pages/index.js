@@ -228,13 +228,13 @@ export default function Home(props) {
             >
               "I have found the one whom my soul loves."
             </h1>
-            <p className="mt-2 font-dancing-script font-bold text-5xl tracking-wider text-brand">
+            <p className="mt-2 font-dancing-script font-bold text-4xl tracking-wider text-brand">
               {"- Song of Salomon 3:4"}
             </p>
           </div>
           <div className={"mt-10"}>
-            <span className="font-montserrat text-xl text-brand-dark">
-              <span className="font-montserrat text-4xl">#MonaJudeNi!</span> on
+            <span className="font-montserrat text-2xl text-brand-dark">
+              <span className="font-montserrat text-3xl">#MonaJudeNi!</span> on
               8 August 2023
             </span>
           </div>
