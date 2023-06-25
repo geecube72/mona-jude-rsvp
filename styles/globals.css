@@ -4,7 +4,7 @@
 
 @layer base {
   @font-face {
-    font-family: "DancingScript";
+    font-family: "Dancing Script";
     src: local("DancingScript"),
       url(../public/fonts/DancingScript.ttf) format("truetype");
   }

@@ -192,17 +192,17 @@ export default function Home(props) {
         </div>
         <div
           className={"h-auto mt-10 flex justify-center items-center mx-auto"}
-          style={{ maxWidth: 400 }}
+          style={{ maxWidth: 500 }}
         >
           <div className="text-3xl w-full text-center flex-col">
             <div className={"px-10"}>
               <h1
-                className="font-dancing-script font-bold text-4xl tracking-wider text-brand mb-8"
+                className="font-dancing-script font-bold text-5xl tracking-wider text-brand mb-8"
                 style={{ lineHeight: "3rem" }}
               >
                 Thank you for your response! We are looking forward to see you!
               </h1>
-              <h2 className="font-dancing-script font-bold tracking-wider text-brand-dark mb-2">
+              <h2 className="font-montserrat tracking-wider text-brand-dark mb-2">
                 {"#MonaJudeNi! <3"}
               </h2>
             </div>
@@ -223,19 +223,19 @@ export default function Home(props) {
         <div className="w-full text-center flex-col px-5">
           <div>
             <h1
-              className="font-dancing-script font-bold text-4xl tracking-wider text-brand"
+              className="font-dancing-script font-bold text-5xl tracking-wider text-brand"
               style={{ lineHeight: "3rem" }}
             >
               "I have found the one whom my soul loves."
             </h1>
-            <p className="mt-2 font-dancing-script font-bold text-3xl tracking-wider text-brand">
+            <p className="mt-2 font-dancing-script font-bold text-5xl tracking-wider text-brand">
               {"- Song of Salomon 3:4"}
             </p>
           </div>
           <div className={"mt-10"}>
             <span className="font-montserrat text-xl text-brand-dark">
-              <span className="font-dancing-script text-2xl">#MonaJudeNi!</span>{" "}
-              on 8 August 2023
+              <span className="font-montserrat text-4xl">#MonaJudeNi!</span> on
+              8 August 2023
             </span>
           </div>
           <div className="mx-auto mt-6" style={{ maxWidth: 400 }}>
