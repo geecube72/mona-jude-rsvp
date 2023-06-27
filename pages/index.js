@@ -9,7 +9,6 @@ export default function Home(props) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(false);
   const [inputContainer, setInputContainer] = useState([]);
-  const [imgUrl, setImgUrl] = useState("");
 
   useEffect(() => {
     if (!props.hashtag || props.hashtag !== "MonaJudeNi") {
@@ -19,10 +18,6 @@ export default function Home(props) {
       guestCount.current = 1;
     }
   }, [props]);
-
-  useEffect(() => {
-    setImgUrl(`${window.location.origin}/img/mona-jude.jpg`);
-  }, []);
 
   const handleSubmit = useCallback(
     async (e) => {
@@ -187,11 +182,8 @@ export default function Home(props) {
   const YesAnswerComponent = () => {
     return (
       <div className="h-full md:h-screen flex flex-col items-center justify-center">
-        <div className="w-full mx-auto" style={{ maxWidth: 500 }}>
-          <img src={imgUrl} alt="mona-jude-bg" loading="lazy" />
-        </div>
         <div
-          className={"h-auto mt-10 flex justify-center items-center mx-auto"}
+          className={"h-auto flex justify-center items-center mx-auto"}
           style={{ maxWidth: 500 }}
         >
           <div className="text-3xl w-full text-center flex-col">
